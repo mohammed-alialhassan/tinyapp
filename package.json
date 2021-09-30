@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/mohammed-alialhassan/tinyapp-Again/issues"
   },
-  "homepage": "https://github.com/mohammed-alialhassan/tinyapp-Again#readme"
+  "homepage": "https://github.com/mohammed-alialhassan/tinyapp-Again#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
