@@ -1,12 +1,12 @@
 const generateRandomString = () => Math.random().toString(36).substr(2, 6);
 
-const createUser = function(email, password, users) {
+const creatingUser = function(email, hashedpassword, users) {
   const userID = Math.random().toString(36).substring(2,8);
   
   users[userID] = {
     id: userID,
     email,
-    password,
+    password: hashedpassword,
   };
   return userID;
 };
@@ -18,17 +18,7 @@ const findUserByEmail = function(email, users) {
       return user;
     }
   }
-  return false;
-};
-
-const findUserByPassword = function(password, users) {
-  for (let userKey in users) {
-    const user = users[userKey];
-    if (user.password === password) {
-      return user.id;
-    }
-  }
-  return false;
+  return undefined;
 };
 
 const savedUrls = function(id, urlData) {
@@ -46,7 +36,6 @@ const savedUrls = function(id, urlData) {
 module.exports = {
   generateRandomString,
   findUserByEmail,
-  findUserByPassword,
-  createUser,
+  creatingUser,
   savedUrls
 }
