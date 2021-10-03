@@ -1,29 +1,29 @@
 <header>
   <nav class="navbar navbar-expand-md navbar-dark bg-success">
     <a class="navbar-brand" href="/urls">TinyApp</a>
+    <a class="navbar-brand" href="/urls">My URLs</a>
+        <a class="navbar-brand" href="/urls/new">Create New URL</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
-        <a class="nav-item nav-link" href="/urls">My URLs</a>
-        <a class="nav-item nav-link" href="/urls/new">Create New URL</a>
-       <div class= "col">
+        </div>
+        </div>
         <!--For logged in user, logout button present-->
      <% if (user) { %>
-      <h4>Logged in as <%= user.email %>!</h4>
+      <h3>Logged in as <%= user.email %>! </h3>
       <!--Post and action for logging out-->
-      <div class = "col-6">
       <form method="POST" action="/logout">
-        <button type="submit" value="Logout" class="btn btn-primary btn-lg">Logout</button>
+        <div>
+        </div>
+        <button type="submit" value="Logout" class="btn btn-outline-light" style= "background-color: darkgrey;">Logout</button>
       </form>
     <!--For guest user, Login form present-->
     <% } else { %>
       <div class="navbar-nav">
         <a class="nav-item nav-link" href="/login">Login</a>
         <a class="nav-item nav-link" href="/register">Register</a>
-      </div>
-    </div>
     <% } %>
   </nav>
 </header>
