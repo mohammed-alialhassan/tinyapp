@@ -5,14 +5,12 @@ const { savedUrls, creatingUser, findUserByEmail } = require("./helperFunctions"
 const bcrypt = require("bcryptjs");
 const bodyParser = require("body-parser");
 const cookieSession = require("cookie-session");
-
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.use(cookieSession({
   name: "session",
   keys: ["Gotta protect these cookies!"]
 }))
-
 
 const urlDatabase = {
   "b2xVn2": {
@@ -30,7 +28,7 @@ const hashedPassword = bcrypt.hashSync(password, 10);
 
 const users = {
   "s4jf04": {
-    id: "userRandomID",
+    id: "s4jf04",
     email: "thekid@struggling.com",
     password: hashedPassword
   }
@@ -38,8 +36,8 @@ const users = {
 
 app.get("/", (req, res) => {
   const userId = req.session.user_id;
-  const loggedInUser = users[userId];
-  if (loggedInUser) {
+  const signedUser = users[userId];
+  if (signedUser) {
     res.redirect('/urls');
   } else {
     res.redirect('/login');
@@ -178,7 +176,6 @@ app.post("/logout", (req,res) => {
   res.redirect("/urls");
 });
 
-
 //User Registration
 app.get('/login', (req, res) => {
   //formally was req.cookies["user_id"]
@@ -205,7 +202,6 @@ app.get('/register',(req,res) => {
       res.render('register', templateVars);
     }
 });
-
 
 //Authenticating registration (checking if user already exists in database)
 app.post('/register',(req, res) => {
