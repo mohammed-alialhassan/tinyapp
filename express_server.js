@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const PORT = 8080; // default port 8080
-const { savedUrls, creatingUser, findUserByEmail } = require("./helperFunctions");
+const { savedUrls, creatingUser, findUserByEmail, generateRandomString, idCheck } = require("./helperFunctions");
 const bcrypt = require("bcryptjs");
 const bodyParser = require("body-parser");
 const cookieSession = require("cookie-session");
@@ -61,7 +61,8 @@ app.get("/urls", (req, res) => {
 app.post("/urls", (req, res) => {
   //formally used req.cookies["user_id"];
   console.log(urlDatabase);
-  let shortURL = Math.random().toString(36).substring(2,8);
+  //Making use of the generateRandomString function
+  let shortURL = generateRandomString();
   const userId = req.session.user_id;
   urlDatabase[shortURL] = {
     longURL: req.body.longURL,
@@ -126,8 +127,9 @@ app.get("/u/:shortURL", (req, res) => {
 //deleting a url from logged in user's database
 app.post("/urls/:shortURL/delete", (req,res) => {
   const shortURL = req.params.shortURL;
-  const ID = Object.keys(users);
-  if (urlDatabase[shortURL].userID !== ID[0]) {
+  let matchedId = 0;
+  matchedId = idCheck(shortURL, users, urlDatabase);
+  if (!matchedId) {
     res.send("Permission denied! Deleting this URL ");
     return;
   }
@@ -137,8 +139,9 @@ app.post("/urls/:shortURL/delete", (req,res) => {
 
 app.get("/urls/:shortURL/delete", (req,res) => {
   const shortURL = req.params.shortURL;
-  const ID = Object.keys(users);
-  if (urlDatabase[shortURL].userID !== ID[0]) {
+  let matchedId = 0;
+      matchedId = idCheck(shortURL, users, urlDatabase);
+  if (!matchedId) {
     res.send("Permission denied! Deleting this URL ");
     return;
   }
@@ -208,7 +211,7 @@ app.post('/register',(req, res) => {
   const email = req.body.email;
   const password = req.body.password;
   const hashedPassword = bcrypt.hashSync(password, 10);
-  if ((email === "") || (hashedPassword === "")) {
+  if ((email === "") || (password === "")) {
     res.status(400).send("No email or password entered!");
   }
   const userFound = findUserByEmail(email, users);
