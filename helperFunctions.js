@@ -1,11 +1,13 @@
+const bcrypt = require('bcryptjs');
+
 const generateRandomString = () => Math.random().toString(36).substr(2, 6);
 
-const creatingUser = function(email, hashedpassword, users) {
+const creatingUser = function(email, password, users) {
   const userID = generateRandomString();
   users[userID] = {
     id: userID,
     email,
-    password: hashedpassword,
+    password,
   };
   return userID;
 };
@@ -18,6 +20,15 @@ const findUserByEmail = function(email, users) {
     }
   }
   return undefined;
+};
+
+const authenticateUser = (email, password, users) => {
+  const user = findUserByEmail(email, users);
+  if (user && bcrypt.compareSync(password, user.password)) {
+    return user;
+  }
+  console.log("Password is incorrect");
+  return null;
 };
 
 const savedUrls = function(id, urlData) {
@@ -45,8 +56,8 @@ const idCheck = function (shortURL, users, urlDatabase) {
 
 module.exports = {
   generateRandomString,
-  findUserByEmail,
+  authenticateUser,
   creatingUser,
   savedUrls,
-  idCheck
+  findUserByEmail
 }
