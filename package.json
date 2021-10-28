@@ -1,5 +1,5 @@
 {
-  "name": "tinyapp-Again",
+  "name": "tinyapp",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -9,15 +9,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mohammed-alialhassan/tinyapp-Again.git"
+    "url": "git+https://github.com/mohammed-alialhassan/tinyapp.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/mohammed-alialhassan/tinyapp-Again/issues"
+    "url": "https://github.com/mohammed-alialhassan/tinyapp/issues"
   },
-  "homepage": "https://github.com/mohammed-alialhassan/tinyapp-Again#readme",
+  "homepage": "https://github.com/mohammed-alialhassan/tinyapp#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",

@@ -23,7 +23,7 @@ const urlDatabase = {
   }
 };
 
-const password = "Raptors"; // found in the req.params object
+const password = "raptors"; // found in the req.params object
 const hashedPassword = bcrypt.hashSync(password, 10);
 
 const users = {
@@ -98,7 +98,9 @@ app.get("/urls/:shortURL", (req, res) => {
   const longURL = urlDatabase[req.params.shortURL].longURL;
   const templateVars = {
     user: signedUser,
-    shortURL: req.params.shortURL, longURL: longURL };
+    shortURL: req.params.shortURL, 
+    longURL: longURL 
+  };
   if (urlDatabase[req.params.shortURL].userID !== users[userId].id) {
     res.send("Sorry, you dont have permission to edit other user's url");
     return;
@@ -120,7 +122,7 @@ app.get("/u/:shortURL", (req, res) => {
     const longURL = urlDatabase[req.params.shortURL].longURL;
     res.redirect(longURL);
   } else {
-    res.render('error.ejs', templateVars);
+    res.render("error", templateVars);
   }
 });
 
@@ -156,8 +158,7 @@ app.post("/urls/:id", (req,res) => {
 
 //Cookies For Login
 app.post("/login", (req,res) => {
-  const email = req.body.email;
-  const password = req.body.password;
+  const {email, password} = req.body;
   const foundByEmail = findUserByEmail(email, users);
 
   if (!foundByEmail) {
