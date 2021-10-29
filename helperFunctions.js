@@ -1,7 +1,9 @@
 const bcrypt = require('bcryptjs');
 
+//helps generate a random id for creatingUser function below
 const generateRandomString = () => Math.random().toString(36).substr(2, 6);
 
+//used in registration for creating a new user
 const creatingUser = function(email, password, users) {
   const userID = generateRandomString();
   users[userID] = {
@@ -12,6 +14,7 @@ const creatingUser = function(email, password, users) {
   return userID;
 };
 
+//helper function for authenticatingUser and also check input email vs an email in the database to look for a match
 const findUserByEmail = function(email, users) {
   for (let userKey in users) {
     const user = users[userKey];
@@ -22,6 +25,7 @@ const findUserByEmail = function(email, users) {
   return undefined;
 };
 
+//used in login/registration, for checking if user exists in database already
 const authenticateUser = (email, password, users) => {
   const user = findUserByEmail(email, users);
   if (user && bcrypt.compareSync(password, user.password)) {
@@ -31,6 +35,7 @@ const authenticateUser = (email, password, users) => {
   return null;
 };
 
+//used to link urls to specific user
 const savedUrls = function(id, urlData) {
   const updatedUrls = {};
   const keys  = Object.keys(urlData);
@@ -41,18 +46,6 @@ const savedUrls = function(id, urlData) {
   }
   return updatedUrls;
 };
-
-//Having idCheck only allows the specific user to edit/delete urls
-const idCheck = function (shortURL, users, urlDatabase) {
-  const ID = Object.keys(users);
-  let matchedId = 0;
-  for (const id of ID) {
-    if (urlDatabase[shortURL].userID === id) {
-      matchedId = 1;
-    }
-  }
-  return matchedId;
-}
 
 module.exports = {
   generateRandomString,

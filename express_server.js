@@ -50,7 +50,7 @@ app.get("/urls", (req, res) => {
   const userId = req.session.user_id;
   const signedUser = users[userId];
   if (!signedUser) {
-    return res.redirect("/login");
+    res.status(401).send("You have to be a logged in user in order to access this function");
   }
   const updatedShortUrl = savedUrls(userId, urlDatabase);
   const templateVars = {
@@ -176,8 +176,6 @@ app.get("/urls/:shortURL/delete", (req,res) => {
 app.post("/urls/:id", (req,res) => {
   const id = req.params.id;
   urlDatabase[id].longURL = req.body.quoteContent;
-  console.log(urlDatabase[id].longURL);
-  console.log(id);
   const userId = req.session.user_id;
   const signedUser = users[userId];
   if (!signedUser) {
